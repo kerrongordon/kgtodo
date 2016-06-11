@@ -1,0 +1,125 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+
+
+<dom-module id="kgtodo-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+        --paper-card-header: {
+          margin-right: 20px;
+          width: 250px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        --paper-fab-background: transparent;
+
+        --paper-fab: {
+          color: var(--primary-color);
+        }
+
+        --paper-fab-disabled: {
+          background-color: transparent;
+        }
+        --paper-icon-button: {
+          color: #F44336;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+      .kgtodo-card {
+        margin: 10px auto;
+        width: 500px;
+        transition: all 0.3s ease-in-out;
+      }
+      .kgtodo-card.true {
+        background: var(--light-primary-color);
+        color: #9b9b9b !important;
+      }
+      paper-checkbox.checkbtn {
+        position: absolute;
+        top: 23px;
+        right: 23px;
+      }
+      paper-fab.edbtn {
+        position: absolute;
+        right: 9px;
+        bottom: 5px;
+        box-shadow: none;
+        transition: all 0.3s ease-in-out;
+      }
+    </style>
+
+    <paper-card  animated heading="{{kgtodo.label}}" class$="kgtodo-card card {{kgtodo.isComplete}}">
+      <paper-checkbox class="checkbtn" checked="{{kgtodo.isComplete}}"></paper-checkbox>
+      <div class="card-content">
+        <p hidden$="{{!kgtodoEdit}}">{{kgtodo.label}}</p>
+        <paper-textarea hidden$="{{kgtodoEdit}}" label="Edit" on-keydown="_updatKgtodo" disabled="{{kgtodo.isComplete}}" value="{{kgtodo.label::input}}"></paper-textarea>
+      </div>
+      <div class="card-actions">
+        <paper-icon-button on-tap="_onDelete" disabled="{{kgtodo.isComplete}}" icon="icons:delete"></paper-icon-button>
+        <paper-fab mini icon="editor:mode-edit" class="edbtn" disabled="{{kgtodo.isComplete}}" on-tap="_onEdit" title="Edit"></paper-fab>
+      </div>
+    </paper-card>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'kgtodo-item',
+
+      properties: {
+        kgtodo: Object,
+        kgtodoEdit: {
+          type:Boolean,
+          value: true
+        }
+      },
+
+      _updatKgtodo: function(e) {
+        if(e.keyCode === 13) {
+          this._onEdit();
+        }
+      },
+
+      _onEdit: function(e) {
+        this.kgtodoEdit = !this.kgtodoEdit
+        var card = document.querySelector('.card');
+
+        // if (!this.kgtodoEdit) {
+        //   card.setAttribute('elevation', '5');
+        // }else {
+        //   card.setAttribute('elevation', '1');
+        // }
+      },
+
+      _onDelete: function() {
+        this.fire('delete-kgtodo', {kgtodo: this.kgtodo});
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
