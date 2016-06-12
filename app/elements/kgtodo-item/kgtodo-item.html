@@ -73,19 +73,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-shadow: none;
         transition: all 0.3s ease-in-out;
       }
+      .heading h2 {
+        padding: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #000;
+      }
+      .profileImg {
+        width: 50px;
+        height: 50px;
+        float: left;
+        border-radius: 50%;
+        margin: 10px 10px 0px 15px;
+        background-color: lightgray;
+      }
     </style>
 
-    <paper-card  animated heading="{{kgtodo.label}}" class$="kgtodo-card card {{kgtodo.isComplete}}">
-      <paper-checkbox class="checkbtn" checked="{{kgtodo.isComplete}}"></paper-checkbox>
+    <paper-card  animated class$="kgtodo-card card {{kgtodo.isComplete}}">
+
+      <div class="heading">
+        <iron-image class="profileImg"
+                    sizing="cover"
+                    preload src="[[user.google.profileImageURL]]"></iron-image>
+        <h2>{{kgtodo.label}}</h2>
+      </div>
+
+      <paper-checkbox class="checkbtn"
+                      checked="{{kgtodo.isComplete}}"></paper-checkbox>
+
       <div class="card-content">
-        <p hidden$="{{!kgtodoEdit}}">{{kgtodo.content}}</p>
-        <paper-textarea hidden$="{{kgtodoEdit}}" label="Edit" on-keydown="_updatKgtodo" disabled="{{kgtodo.isComplete}}" value="{{kgtodo.content::input}}"></paper-textarea>
+
+        <paper-item hidden$="{{!kgtodoEdit}}"
+                    on-tap="_onEdit">[[kgtodo.content]]</paper-item>
+
+        <paper-textarea hidden$="{{kgtodoEdit}}"
+                        id="ontextarea"
+                        label="Edit"
+                        on-keydown="_updatKgtodo"
+                        disabled="{{kgtodo.isComplete}}"
+                        value="{{kgtodo.content::input}}"></paper-textarea>
+
       </div>
+
       <div class="card-actions">
-        <paper-icon-button on-tap="_onDelete" disabled="{{kgtodo.isComplete}}" icon="icons:delete"></paper-icon-button>
-        <paper-fab mini icon="editor:mode-edit" class="edbtn" disabled="{{kgtodo.isComplete}}" on-tap="_onEdit" title="Edit"></paper-fab>
+
+        <paper-icon-button on-tap="_onDelete"
+                           disabled="{{kgtodo.isComplete}}"
+                           icon="icons:delete"></paper-icon-button>
+
+        <paper-fab mini icon="editor:mode-edit"
+                   class="edbtn"
+                   disabled="{{kgtodo.isComplete}}"
+                   on-tap="_onEdit"
+                   title="Edit"></paper-fab>
+
       </div>
+
     </paper-card>
+
+    <paper-toast id="todoRemove"
+                 text="[[getlabel]] Has Been Deleted"></paper-toast>
 
   </template>
   <script>
@@ -113,11 +160,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.kgtodoEdit = !this.kgtodoEdit
         var card = document.querySelector('.card');
 
-        // if (!this.kgtodoEdit) {
-        //   card.setAttribute('elevation', '5');
-        // }else {
-        //   card.setAttribute('elevation', '1');
-        // }
+        this.$.ontextarea.focus();
+
+        if (!this.kgtodoEdit) {
+          card.setAttribute('elevation', '5');
+        }else {
+          card.setAttribute('elevation', '1');
+        }
       },
 
       _onDelete: function() {

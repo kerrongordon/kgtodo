@@ -23,7 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-    <firebase-collection location="{{userLocation}}" data="{{kgtodos}}" order-by-child="timestamp"></firebase-collection>
+    <firebase-collection id="userData" location="{{userLocation}}"
+                         data="{{kgtodos}}"
+                         order-by-child="id"></firebase-collection>
 
 
 

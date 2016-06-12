@@ -44,21 +44,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: white !important;
         };
       }
+      paper-progress {
+        text-align: center;
+        margin: 0 auto;
+        padding: 0 0 20px;
+      }
     </style>
 
     <template is="dom-if" if="{{!kgtodos.length}}">
+
       <paper-material id="thereisnotodos">
+
         <paper-item>No Tasks Found.</paper-item>
-        <paper-button raised class="indigo" on-tap="_newKgtodo">
-          <iron-icon icon="icons:create"></iron-icon>Add New Task
+
+        <paper-button raised class="indigo"
+                      on-tap="_newKgtodo">
+
+          <iron-icon icon="icons:create"></iron-icon> Add New Task
+
         </paper-button>
+
       </paper-material>
+
     </template>
 
     <div class="cards">
-    <template is="dom-repeat" items="{{kgtodos}}" as="kgtodo" filter="{{computeFilter(searchForTodo)}}" target-framerate>
-      <kgtodo-item class="kgtodoItem" kgtodo="{{kgtodo}}"></kgtodo-item>
+
+    <template is="dom-repeat"
+              items="{{kgtodos}}"
+              as="kgtodo"
+              filter="{{computeFilter(searchForTodo)}}"
+              target-framerate>
+
+      <kgtodo-item class="kgtodoItem"
+                   user="{{user}}"
+                   kgtodo="{{kgtodo}}"></kgtodo-item>
+
     </template>
+
     </div>
 
   </template>

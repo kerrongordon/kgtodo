@@ -10,9 +10,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
 
 
@@ -52,24 +55,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transition: all 0.4s ease-in-out;
       }
       .toggle .toggleHide{
-        margin-left: -45px;
+        margin-left: -58px;
         opacity: 0;
+      }
+      #sidebar {
+        z-index: 200;
+        color: var(--secondary-text-color) !important;
+      }
+      .newTask {
+        background-color: var(--primary-color);
+        position: absolute;
+        right: 25px;
+        bottom: 25px;
       }
     </style>
 
     <app-toolbar id="searchTodo">
-      <paper-icon-button class='toggleHide' icon="icons:create" on-tap="_newKgtodo"></paper-icon-button>
-      <div title class='toggleHide'>Add Todo</div>
-      <paper-icon-button class='toggleHide' icon="icons:delete" on-tap="clearKgtodo">Clear</paper-icon-button>
-      <paper-icon-button icon="search" on-tap="searchTodo"></paper-icon-button>
-      <paper-input id="kgSearch" class="searchBtn" label="search" value="{{searchForTodo::input}}"></paper-input>
+
+      <app-drawer id="sidebar" swipe-open>
+
+          <kgtodo-sidebar user="{{user}}"></kgtodo-sidebar>
+
+      </app-drawer>
+
+      <paper-menu-button class="toggleHide">
+
+        <paper-icon-button icon="menu"
+                           class="dropdown-trigger"
+                           on-tap="_toggleSideBar"></paper-icon-button>
+
+      </paper-menu-button>
+
+      <div title class='toggleHide'>Task Manager</div>
+
+      <paper-icon-button class='toggleHide'
+                         icon="icons:delete"
+                         on-tap="clearKgtodo">Clear</paper-icon-button>
+
+      <paper-icon-button icon="search"
+                         on-tap="searchTodo"></paper-icon-button>
+
+      <paper-input id="kgSearch"
+                   class="searchBtn"
+                   label="search"
+                   value="{{searchForTodo::input}}"></paper-input>
+
     </app-toolbar>
 
     <kgtodo-input on-add-kgtodo="addKgtodo"></kgtodo-input>
-    <kgtodo-list id="kgtodoList" on-tap="tapOnList" kgtodos="{{kgtodos}}" on-delete-kgtodo="deleteKgtodo" search-for-todo="{{searchForTodo}}"></kgtodo-list>
+
+    <kgtodo-list id="kgtodoList"
+                 user="{{user}}"
+                 on-tap="tapOnList"
+                 kgtodos="{{kgtodos}}"
+                 on-delete-kgtodo="deleteKgtodo"
+                 search-for-todo="{{searchForTodo}}"></kgtodo-list>
+
+    <paper-fab class="newTask"
+               noink icon="icons:create"
+               title="heart"
+               on-tap="_newKgtodo"></paper-fab>
 
     <!-- <paper-toast id="noTask" text="There is no Task Available"></paper-toast> -->
-    <paper-toast id="taskDone" text="loading completed"></paper-toast>
+
+    <paper-toast id="taskDone"
+                 text="loading completed"></paper-toast>
   </template>
   <script>
   (function() {
@@ -97,12 +147,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _taskAvailable: function(kgtodos) {
-        // if (kgtodos.base.length === 0) {
-        //   this.$.noTask.open();
-        // }
-        if (kgtodos.base.length > 0) {
+        if (kgtodos.base.length > '0') {
           this.$.taskDone.open();
         }
+      },
+
+      _logout: function() {
+        this._toggleSideBar();
+        var auth = document.querySelector('kgtodo-auth');
+        auth.$.auth.logout();
+      },
+
+      _toggleSideBar: function() {
+        this.$.sidebar.toggle();
       },
 
       searchTodo: function() {
@@ -126,7 +183,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           label: e.detail.label,
           content: e.detail.content,
           isComplete: false,
-          timestamp: new Date().getTime()
+          timestamp: new Date().getTime(),
+          id: this.kgtodos.length
         });
       },
 
