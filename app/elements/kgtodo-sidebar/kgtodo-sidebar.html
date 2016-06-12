@@ -1,0 +1,91 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="kgtodo-sidebar">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .menuBtn .dropdown-trigger {
+        margin: 13px -5px 10px 16px;
+      }
+      .profileImg {
+        width: 175px;
+        height: 175px;
+        border-radius: 50%;
+        margin: 20px auto;
+        display: block;
+        background-color: lightgray;
+      }
+      .userName h3{
+        text-align: center;
+        font-weight: 300;
+      }
+      .logoutBtn {
+        display: block;
+        text-align: center;
+        font-size: 15px;
+      }
+    </style>
+
+    <paper-menu-button class="menuBtn">
+
+      <paper-icon-button icon="menu"
+                         class="dropdown-trigger"
+                         on-tap="_toggleSideBar"></paper-icon-button>
+
+    </paper-menu-button>
+
+    <span title class='toggleHide'>Task Manager</span>
+
+    <iron-image class="profileImg"
+                sizing="cover"
+                preload src="[[user.google.profileImageURL]]"></iron-image>
+
+
+    <div class="userName"><h3>{{user.google.displayName}}</h3></div>
+
+    <paper-button class="logoutBtn"
+                  on-tap="_logout">
+
+      <iron-icon icon="icons:input"></iron-icon> logout
+
+    </paper-button>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'kgtodo-sidebar',
+
+      properties: {
+
+      },
+
+      _toggleSideBar: function() {
+        var sideb = document.querySelector('kgtodo-view');
+        sideb.$.sidebar.toggle();
+      },
+
+      _logout: function() {
+        this._toggleSideBar();
+        var auth = document.querySelector('kgtodo-auth');
+        auth.$.auth.logout();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
