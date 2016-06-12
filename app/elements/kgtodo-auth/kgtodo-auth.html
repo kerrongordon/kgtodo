@@ -10,10 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase.html">
-<link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-auth.html">
 
-
-<dom-module id="kgtodo-data">
+<dom-module id="kgtodo-auth">
   <template>
     <style>
       :host {
@@ -21,10 +20,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
+    <firebase-auth id="auth"
+                   location="{{location}}"
+                   provider="google"
+                   user="{{user}}"></firebase-auth>
 
-
-    <firebase-collection location="{{userLocation}}" data="{{kgtodos}}" order-by-child="timestamp"></firebase-collection>
-
+    <paper-dialog modal opened="{{!user}}">
+      <paper-button raised on-tap="_login">Login</paper-button>
+    </paper-dialog>
 
 
   </template>
@@ -33,26 +36,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-
-      is: 'kgtodo-data',
+      is: 'kgtodo-auth',
 
       properties: {
-        kgtodos: {
-          notify: true
-        },
         location: {
           notify: true
         },
         user: {
-          observer: '_userChanged'
+          notify: true
         }
       },
 
-      _userChanged: function(user) {
-        if (user) {
-          this.userLocation = [this.location, 'users', this.user.uid].join('/');
-        }
+      _login: function() {
+        this.$.auth.login();
       },
+
+      _logout: function() {
+        this.$.auth.logout();
+      }
 
     });
   })();

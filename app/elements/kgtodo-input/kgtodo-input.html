@@ -11,6 +11,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-down-animation.html">
 
 <dom-module id="kgtodo-input">
   <template>
@@ -18,12 +25,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      paper-dialog {
+        padding: 20px;
+      }
+      #kgTodoContent {
+        height: 300px;
+      }
     </style>
 
-    <paper-input id="kgtodoInput" no-label-float label="Add an item" on-keydown="_checkAdd"></paper-input>
-    <paper-button on-tap="_onAdd">Add Todo</paper-button>
+    <paper-dialog id="kgtodoAddNew" always-on-top entry-animation="scale-up-animation" exit-animation="scale-down-animation" with-backdrop>
+      <h2>Add New Todo</h2>
+      <paper-dialog-scrollable>
+        <paper-input id="kgTodoLabel" label="Add label" value={{getlabel::input}}></paper-input>
+        <paper-textarea id="kgTodoContent" label="Add content"></paper-textarea>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button on-tap="_onAdd">Add Todo</paper-button>
+      </div>
+    </paper-dialog>
 
-    <h1>sdf</h1>
+    <paper-toast id="noLabel" text="Please add an Title"></paper-toast>
+    <paper-toast id="noContent" text="Please add some Content"></paper-toast>
+    <paper-toast id="newTodoAdded" text="[[getlabel]] Has Been Added"></paper-toast>
 
   </template>
   <script>
@@ -33,18 +56,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'kgtodo-input',
 
-    _checkAdd: function(e) {
-      if(e.keyCode === 13) {
-        this._onAdd();
-      }
-    },
+
+      properties: {
+        getlabel: {
+          type: String,
+          notify: true
+        }
+      },
+
+    // _checkAdd: function(e) {
+    //   if(e.keyCode === 13) {
+    //     this._onAdd();
+    //   }
+    // },
 
     _onAdd: function() {
-        if (this.$.kgtodoInput.value) {
-          this.fire('add-kgtodo', {value: this.$.kgtodoInput.value});
-          this.$.kgtodoInput.value = null;
-        }
+
+      if (!this.$.kgTodoLabel.value) {
+        this.$.noLabel.open();
       }
+
+      if (!this.$.kgTodoContent.value) {
+        this.$.noContent.open();
+      }
+
+      if (this.$.kgTodoLabel.value && this.$.kgTodoContent.value ) {
+        this.fire('add-kgtodo', {label: this.$.kgTodoLabel.value, content: this.$.kgTodoContent.value});
+        this.$.kgTodoLabel.value = null;
+        this.$.kgTodoContent.value = null;
+        this.$.kgtodoAddNew.close();
+        this.$.newTodoAdded.open();
+      }
+
+    }
 
     });
   })();

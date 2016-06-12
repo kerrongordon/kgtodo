@@ -20,6 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-down-animation.html">
+
 <dom-module id="kgtodo-item">
   <template>
     <style>
@@ -48,8 +51,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
       .kgtodo-card {
-        margin: 10px auto;
-        width: 500px;
+        margin: 20px auto;
+        display: block;
+        width: 100%;
+        max-width: 500px;
         transition: all 0.3s ease-in-out;
       }
       .kgtodo-card.true {
@@ -73,8 +78,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-card  animated heading="{{kgtodo.label}}" class$="kgtodo-card card {{kgtodo.isComplete}}">
       <paper-checkbox class="checkbtn" checked="{{kgtodo.isComplete}}"></paper-checkbox>
       <div class="card-content">
-        <p hidden$="{{!kgtodoEdit}}">{{kgtodo.label}}</p>
-        <paper-textarea hidden$="{{kgtodoEdit}}" label="Edit" on-keydown="_updatKgtodo" disabled="{{kgtodo.isComplete}}" value="{{kgtodo.label::input}}"></paper-textarea>
+        <p hidden$="{{!kgtodoEdit}}">{{kgtodo.content}}</p>
+        <paper-textarea hidden$="{{kgtodoEdit}}" label="Edit" on-keydown="_updatKgtodo" disabled="{{kgtodo.isComplete}}" value="{{kgtodo.content::input}}"></paper-textarea>
       </div>
       <div class="card-actions">
         <paper-icon-button on-tap="_onDelete" disabled="{{kgtodo.isComplete}}" icon="icons:delete"></paper-icon-button>

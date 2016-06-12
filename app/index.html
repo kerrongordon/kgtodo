@@ -63,10 +63,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <kgtodo-data kgtodos="{{kgtodos}}"></kgtodo-data>
-    <kgtodo-view kgtodos="{{kgtodos}}"></kgtodo-view>
-
-
+    <kgtodo-auth location="https://kgtodo.firebaseio.com" user="{{user}}"></kgtodo-auth>
+    <kgtodo-data kgtodos="{{kgtodos}}" user="{{user}}" location="https://kgtodo.firebaseio.com"></kgtodo-data>
+    <kgtodo-view kgtodos="{{kgtodos}}" user="{{user}}"></kgtodo-view>
 
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->

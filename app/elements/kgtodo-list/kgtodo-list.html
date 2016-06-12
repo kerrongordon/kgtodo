@@ -9,6 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="kgtodo-list">
   <template>
@@ -16,11 +19,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .cards {
+        margin: 0 20px;
+      }
+      paper-material {
+        background: #fff;
+        text-align: center;
+        width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      paper-item {
+        --paper-item: {
+          text-align: center;
+          display: block;
+          padding: 20px 0 0px;
+        }
+      }
+      paper-button.indigo {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
     </style>
 
-    <template is="dom-repeat" items="{{kgtodos}}" as="kgtodo">
+    <template is="dom-if" if="{{!kgtodos.length}}">
+      <paper-material id="thereisnotodos">
+        <paper-item>No Tasks Found.</paper-item>
+        <paper-button raised class="indigo" on-tap="_newKgtodo">
+          <iron-icon icon="icons:create"></iron-icon>Add New Task
+        </paper-button>
+      </paper-material>
+    </template>
+
+    <div class="cards">
+    <template is="dom-repeat" items="{{kgtodos}}" as="kgtodo" filter="{{computeFilter(searchForTodo)}}" target-framerate>
       <kgtodo-item class="kgtodoItem" kgtodo="{{kgtodo}}"></kgtodo-item>
     </template>
+    </div>
 
   </template>
   <script>
@@ -31,8 +70,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'kgtodo-list',
 
       properties: {
-        kgtodos: Array
+        kgtodos: Array,
+        searchForTodo: {
+          type: String,
+          notify: true
+        }
+      },
+
+      _newKgtodo: function() {
+        var addNew = document.querySelector('kgtodo-input');
+        addNew.$.kgtodoAddNew.open();
+      },
+
+      computeFilter: function(string) {
+        if (!string) {
+          return null;
+        } else {
+          string = string.toLowerCase();
+          return function(kgtodos) {
+            var label = kgtodos.label.toLowerCase();
+            return (label.indexOf(string) != -1);
+          };
+        }
       }
+
     });
   })();
   </script>
