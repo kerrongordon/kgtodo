@@ -116,7 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                title="heart"
                on-tap="_newKgtodo"></paper-fab>
 
-    <!-- <paper-toast id="noTask" text="There is no Task Available"></paper-toast> -->
+    <paper-toast id="noTask" text="There is no Task Available"></paper-toast>
 
     <paper-toast id="taskDone"
                  text="loading completed"></paper-toast>
@@ -142,13 +142,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      observers: [
-        '_taskAvailable(kgtodos.*)'
-      ],
+      // observers: [
+      //   '_taskAvailable(kgtodos.*)'
+      // ],
 
       _taskAvailable: function(kgtodos) {
-        if (kgtodos.base.length > '0') {
-          this.$.taskDone.open();
+        if (this.kgtodos[0] == null) {
+            this.$.noTask.open();
         }
       },
 
@@ -195,10 +195,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.splice('kgtodos', i--, 1);
           }
         }
+        this._taskAvailable();
       },
 
       deleteKgtodo: function(e) {
         this.arrayDelete('kgtodos', e.detail.kgtodo);
+        this._taskAvailable();
       }
 
     });

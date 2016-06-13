@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit">
-  <title>Polymer Starter Kit</title>
+  <title>Task Manager</title>
 
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -63,8 +63,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <kgtodo-auth location="https://kgtodo.firebaseio.com" user="{{user}}"></kgtodo-auth>
-    <kgtodo-data kgtodos="{{kgtodos}}" user="{{user}}" location="https://kgtodo.firebaseio.com"></kgtodo-data>
+    <kgtodo-auth location="https://kgtask.firebaseio.com" user="{{user}}"></kgtodo-auth>
+    <kgtodo-data kgtodos="{{kgtodos}}" user="{{user}}" location="https://kgtask.firebaseio.com"></kgtodo-data>
     <kgtodo-view kgtodos="{{kgtodos}}" user="{{user}}"></kgtodo-view>
 
 

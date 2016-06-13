@@ -28,6 +28,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          order-by-child="id"></firebase-collection>
 
 
+    <dom-module id="ls-sample">
+
+      <iron-localstorage name="my-app-storage"
+                         value="{{kgtodos}}"
+                         on-iron-localstorage-load-empty="initializeDefaultCartoon"></iron-localstorage>
+
+    </dom-module>
+
+
 
   </template>
   <script>
