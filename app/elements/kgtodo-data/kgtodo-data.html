@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
 
@@ -24,17 +25,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <firebase-collection id="userData" location="{{userLocation}}"
-                         data="{{kgtodos}}"
-                         order-by-child="id"></firebase-collection>
+                         data="{{fbData}}"
+                         order-by-child="id"
+                         on-firebase-value="_firebaseLoaded"></firebase-collection>
 
 
-    <dom-module id="ls-sample">
-
-      <iron-localstorage name="my-app-storage"
-                         value="{{kgtodos}}"
-                         on-iron-localstorage-load-empty="initializeDefaultCartoon"></iron-localstorage>
-
-    </dom-module>
+    <iron-localstorage name="kgtodo"
+                       on-iron-localstorage-load="_backupLoaded"
+                       value="{{backupTodos}}"></iron-localstorage>
 
 
 
@@ -53,17 +51,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         location: {
           notify: true
-        },
-        user: {
-          observer: '_userChanged'
         }
       },
+
+      observers: [
+        '_userChanged(user.*)'
+      ],
 
       _userChanged: function(user) {
         if (user) {
           this.userLocation = [this.location, 'users', this.user.uid].join('/');
         }
       },
+
+      _firebaseLoaded: function() {
+        this._firebaseConnected = true;
+        this.kgtodos = this.fbData;
+        this.backupTodos = this.fbData;
+        this.linkPaths('fbData', 'kgtodos');
+        this.linkPaths('backupTodos', 'kgtodos');
+      },
+
+      _backupLoaded: function() {
+        if (!this._firebaseConnected) {
+          this.kgtodos = this.backupTodos.slice();
+        }
+      }
 
     });
   })();

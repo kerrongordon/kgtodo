@@ -64,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .newTask {
         background-color: var(--primary-color);
-        position: absolute;
+        position: fixed;
         right: 25px;
         bottom: 25px;
       }
@@ -118,7 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-toast id="noTask" text="There is no Task Available"></paper-toast>
 
-    <paper-toast id="taskDone"
+    <paper-toast opened="[[user]]" id="taskDone"
                  text="loading completed"></paper-toast>
   </template>
   <script>
@@ -184,7 +184,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           content: e.detail.content,
           isComplete: false,
           timestamp: new Date().getTime(),
-          id: this.kgtodos.length
+          id: this.kgtodos.length,
+          user: {
+            uid: this.user.uid,
+            provider: this.user.provider,
+            id: this.user.google.cachedUserProfile.id,
+            googleUrl: this.user.google.cachedUserProfile.link,
+            name: this.user.google.cachedUserProfile.name,
+            gender: this.user.google.cachedUserProfile.gender,
+            pictureUrl: this.user.google.cachedUserProfile.picture
+          }
         });
       },
 
@@ -200,6 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       deleteKgtodo: function(e) {
         this.arrayDelete('kgtodos', e.detail.kgtodo);
+        var tasksRemove = document.querySelector('kgtodo-item');
+        tasksRemove.$.todoRemove.open();
         this._taskAvailable();
       }
 

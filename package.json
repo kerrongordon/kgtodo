@@ -30,7 +30,9 @@
   },
   "scripts": {
     "test": "gulp test:local",
-    "start": "gulp serve"
+    "start": "gulp serve",
+    "build": "gulp",
+    "deploy": "npm build && firebase deploy"
   },
   "engines": {
     "node": ">=0.10.0"

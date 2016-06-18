@@ -18,6 +18,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
 
 
 <link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
@@ -60,6 +65,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .kgtodo-card.true {
         background: var(--light-primary-color);
         color: #9b9b9b !important;
+        box-shadow: none;
+      }
+      .kgtodo-card.true .card-content,
+      .kgtodo-card.true .card-actions {
+        display: none;
       }
       paper-checkbox.checkbtn {
         position: absolute;
@@ -74,10 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transition: all 0.3s ease-in-out;
       }
       .heading h2 {
-        padding: 16px;
+        padding: 22px;
         font-size: 24px;
         font-weight: 400;
         color: #000;
+        margin: 0;
       }
       .profileImg {
         width: 50px;
@@ -87,7 +98,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 10px 10px 0px 15px;
         background-color: lightgray;
       }
+      .avatarImg {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: lightgray;
+      }
     </style>
+
 
     <paper-card  animated class$="kgtodo-card card {{kgtodo.isComplete}}">
 
@@ -132,7 +150,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-card>
 
     <paper-toast id="todoRemove"
-                 text="[[getlabel]] Has Been Deleted"></paper-toast>
+                 text="Task Has Been Deleted"></paper-toast>
+
+    <paper-toast id="todoComplete"
+                 opened="[[kgtodo.isComplete]]"
+                 text="Task Has Been Complete"></paper-toast>
+
+    <paper-toast id="todoNotComplete"
+                 opened="[[!kgtodo.isComplete]]"
+                 text="Task Has Been is Not Complete"></paper-toast>
 
   </template>
   <script>
@@ -147,6 +173,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         kgtodoEdit: {
           type:Boolean,
           value: true
+        },
+        isComplete: {
+          type: Boolean,
+          notify: true
         }
       },
 
@@ -167,6 +197,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }else {
           card.setAttribute('elevation', '1');
         }
+      },
+
+      _onActive: function() {
+
+      },
+
+      _onDeselect: function() {
+        this._onEdit();
       },
 
       _onDelete: function() {

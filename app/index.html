@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
+  <meta name="theme-color" content="#673AB7">
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -62,6 +62,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved>
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
+
+    <kgtodo-login-view route={{route}} user={{user}}></kgtodo-login-view>
 
     <kgtodo-auth location="https://kgtask.firebaseio.com" user="{{user}}"></kgtodo-auth>
     <kgtodo-data kgtodos="{{kgtodos}}" user="{{user}}" location="https://kgtask.firebaseio.com"></kgtodo-data>

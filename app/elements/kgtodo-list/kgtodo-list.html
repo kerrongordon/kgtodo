@@ -100,6 +100,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      observers: [
+        '_onDataBaseUpdate(kgtodos.*)'
+      ],
+
+      _onDataBaseUpdate: function(kgtodos) {
+        // console.log(kgtodos);
+      },
+
       _newKgtodo: function() {
         var addNew = document.querySelector('kgtodo-input');
         addNew.$.kgtodoAddNew.open();
