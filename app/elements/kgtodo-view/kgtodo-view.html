@@ -9,15 +9,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/app-layout/app-layout.html">
-<link rel="import" href="../../bower_components/app-layout/app-layout.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
-
-
 
 <dom-module id="kgtodo-view">
   <template>
@@ -204,6 +195,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.splice('kgtodos', i--, 1);
           }
         }
+        var tasksRemove = document.querySelector('kgtodo-item');
+        tasksRemove.$.todoRemove.open();
         this._taskAvailable();
       },
 
