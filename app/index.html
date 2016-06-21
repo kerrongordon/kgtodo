@@ -63,15 +63,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <kgtodo-login-view route={{route}} user={{user}}></kgtodo-login-view>
+    <kgtodo-login-view></kgtodo-login-view>
 
-    <kgtodo-auth location="https://kgtask.firebaseio.com" user="{{user}}"></kgtodo-auth>
+    <!-- <kgtodo-auth location="https://kgtask.firebaseio.com" user="{{user}}"></kgtodo-auth>
     <kgtodo-data kgtodos="{{kgtodos}}" user="{{user}}" location="https://kgtask.firebaseio.com"></kgtodo-data>
-    <kgtodo-view kgtodos="{{kgtodos}}" user="{{user}}"></kgtodo-view>
+    <kgtodo-view kgtodos="{{kgtodos}}" user="{{user}}"></kgtodo-view> -->
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
 
-    <paper-toast id="caching-complete"
+    <!-- <paper-toast id="caching-complete"
                  duration="6000"
                  text="Caching complete! This app will work offline.">
     </paper-toast>
@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <platinum-sw-cache default-cache-strategy="fastest"
                          cache-config-file="cache-config.json">
       </platinum-sw-cache>
-    </platinum-sw-register>
+    </platinum-sw-register> -->
 
   </template>
 
