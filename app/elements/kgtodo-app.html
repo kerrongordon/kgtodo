@@ -1,0 +1,103 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="kgtodo-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <kgtodo-auth id="kgAuth" user="{{user}}" provider="{{provider}}" isLogin="{{isLogin}}"></kgtodo-auth>
+
+    <iron-pages role="main" selected="[[page]]" attr-for-selected="page-title">
+
+      <kgtodo-login page-title="login"
+                    on-facebook-login="facebookSignin"
+                    on-google-login="googleSignin"
+                    on-twitter-login="twitterSignin"
+                    hidden$="{{!isLogin}}"></kgtodo-login>
+
+      <kgtodo-home page-title="home"></kgtodo-home>
+    </iron-pages>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'kgtodo-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        },
+        user: {
+          type: Object,
+          notify: true
+        },
+        isLogin: {
+          type: Boolean,
+          notify: true
+        },
+        provider: {
+          type: String,
+          notify: true
+        }
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+
+      facebookSignin: function(e) {
+        this.$.kgAuth.provider = e.detail.facebook;
+        this.$.kgAuth._login();
+      },
+
+      googleSignin: function(e) {
+        this.$.kgAuth.provider = e.detail.google;
+        this.$.kgAuth._login();
+      },
+
+      twitterSignin: function(e) {
+        this.$.kgAuth.provider = e.detail.twitter;
+        this.$.kgAuth._login();
+      },
+
+      _routePageChanged: function(page) {
+        this.page = page || 'login';
+      },
+
+      _pageChanged: function(page) {
+        // load page import on demand.
+        this.importHref(
+          this.resolveUrl('kgtodo-' + page + '/kgtodo-' + page + '.html'), null, null, true);
+          console.log(page);
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

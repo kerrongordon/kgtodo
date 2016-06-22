@@ -9,8 +9,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../kgtodo-list/kgtodo-list.html">
+<link rel="import" href="../kgtodo-input/kgtodo-input.html">
+<link rel="import" href="../kgtodo-item/kgtodo-item.html">
+<link rel="import" href="../kgtodo-sidebar/kgtodo-sidebar.html">
 
-<dom-module id="kgtodo-view">
+<dom-module id="kgtodo-home">
   <template>
     <style>
       :host {
@@ -117,7 +121,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'kgtodo-view',
+      is: 'kgtodo-home',
 
       properties: {
         kgtodos: {
@@ -174,17 +178,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           label: e.detail.label,
           content: e.detail.content,
           isComplete: false,
-          timestamp: new Date().getTime(),
-          id: this.kgtodos.length,
-          user: {
-            uid: this.user.uid,
-            provider: this.user.provider,
-            id: this.user.google.cachedUserProfile.id,
-            googleUrl: this.user.google.cachedUserProfile.link,
-            name: this.user.google.cachedUserProfile.name,
-            gender: this.user.google.cachedUserProfile.gender,
-            pictureUrl: this.user.google.cachedUserProfile.picture
-          }
+          timestamp: new Date().getTime()
+          // id: this.kgtodos.length,
+          // user: {
+          //   uid: this.user.uid,
+          //   provider: this.user.provider,
+          //   id: this.user.google.cachedUserProfile.id,
+          //   googleUrl: this.user.google.cachedUserProfile.link,
+          //   name: this.user.google.cachedUserProfile.name,
+          //   gender: this.user.google.cachedUserProfile.gender,
+          //   pictureUrl: this.user.google.cachedUserProfile.picture
+          //}
         });
       },
 

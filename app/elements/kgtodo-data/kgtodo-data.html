@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <firebase-collection id="userData" location="{{userLocation}}"
+    <!-- <firebase-collection id="userData" location="{{userLocation}}"
                          data="{{fbData}}"
                          order-by-child="id"
                          on-firebase-value="_firebaseLoaded"></firebase-collection>
@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-localstorage name="kgtodo"
                        on-iron-localstorage-load="_backupLoaded"
-                       value="{{backupTodos}}"></iron-localstorage>
+                       value="{{backupTodos}}"></iron-localstorage> -->
 
   </template>
   <script>
@@ -39,7 +39,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         kgtodos: {
-          notify: true
+          notify: true,
+          value: {
+            "kgtodos": [
+              {
+                "label": "kerron",
+                "content": "gordon",
+                "isComplete": true
+              }
+            ]
+          }
         },
         location: {
           notify: true
@@ -54,21 +63,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (user) {
           this.userLocation = [this.location, 'users', this.user.uid].join('/');
         }
-      },
-
-      _firebaseLoaded: function() {
-        this._firebaseConnected = true;
-        this.kgtodos = this.fbData;
-        this.backupTodos = this.fbData;
-        this.linkPaths('fbData', 'kgtodos');
-        this.linkPaths('backupTodos', 'kgtodos');
-      },
-
-      _backupLoaded: function() {
-        if (!this._firebaseConnected) {
-          this.kgtodos = this.backupTodos.slice();
-        }
       }
+
+      // _firebaseLoaded: function() {
+      //   this._firebaseConnected = true;
+      //   this.kgtodos = this.fbData;
+      //   this.backupTodos = this.fbData;
+      //   this.linkPaths('fbData', 'kgtodos');
+      //   this.linkPaths('backupTodos', 'kgtodos');
+      // },
+      //
+      // _backupLoaded: function() {
+      //   if (!this._firebaseConnected) {
+      //     this.kgtodos = this.backupTodos.slice();
+      //   }
+      // }
 
     });
   })();
