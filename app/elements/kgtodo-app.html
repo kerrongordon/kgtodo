@@ -18,7 +18,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-location route="{{route}}"
+                  use-hash-as-path></app-location>
 
     <app-route
         route="{{route}}"
@@ -26,9 +27,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
-    <kgtodo-auth id="kgAuth" user="{{user}}" provider="{{provider}}" isLogin="{{isLogin}}" emailSignin="{{emailSignin}}"></kgtodo-auth>
+    <kgtodo-auth id="kgAuth"
+                 user="{{user}}"
+                 provider="{{provider}}"
+                 isLogin="{{isLogin}}"
+                 emailSignin="{{emailSignin}}"></kgtodo-auth>
 
-    <iron-pages role="main" selected="[[page]]" attr-for-selected="page-title">
+    <iron-pages role="main"
+                selected="[[page]]"
+                attr-for-selected="page-title">
 
       <kgtodo-login page-title="login"
                     on-facebook-login="facebookSignin"
@@ -37,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     on-email-login="emailSignin"></kgtodo-login>
 
       <kgtodo-home page-title="home"></kgtodo-home>
+
     </iron-pages>
 
   </template>

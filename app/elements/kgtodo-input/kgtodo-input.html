@@ -24,20 +24,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <paper-dialog id="kgtodoAddNew" always-on-top entry-animation="scale-up-animation" exit-animation="scale-down-animation" with-backdrop>
+    <paper-dialog id="kgtodoAddNew"
+                  always-on-top
+                  entry-animation="scale-up-animation"
+                  exit-animation="scale-down-animation"
+                  with-backdrop>
+
       <h2>Add New Todo</h2>
+
       <paper-dialog-scrollable>
-        <paper-input id="kgTodoLabel" label="Add label" value={{getlabel::input}}></paper-input>
-        <paper-textarea id="kgTodoContent" label="Add content"></paper-textarea>
+
+        <paper-input id="kgTodoLabel"
+                     label="Add label"
+                     value={{getlabel::input}}></paper-input>
+
+        <paper-textarea id="kgTodoContent"
+                        label="Add content"></paper-textarea>
+
       </paper-dialog-scrollable>
+
       <div class="buttons">
+
         <paper-button on-tap="_onAdd">Add Todo</paper-button>
+
       </div>
+
     </paper-dialog>
 
-    <paper-toast id="noLabel" text="Please add an Title"></paper-toast>
-    <paper-toast id="noContent" text="Please add some Content"></paper-toast>
-    <paper-toast id="newTodoAdded" text="[[getlabel]] Has Been Added"></paper-toast>
+    <paper-toast id="noLabel"
+                 text="Please add an Title"></paper-toast>
+
+    <paper-toast id="noContent"
+                 text="Please add some Content"></paper-toast>
+
+    <paper-toast id="newTodoAdded"
+                 text="[[getlabel]] Has Been Added"></paper-toast>
 
   </template>
   <script>
