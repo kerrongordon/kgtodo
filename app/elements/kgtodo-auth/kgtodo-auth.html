@@ -26,12 +26,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <firebase-auth id="auth" user="{{user}}" provider="{{provider}}" signed-in="{{isLogin}}" on-error="handleError">
     </firebase-auth>
 
-    <h1>{{isLogin}}</h1>
+    <!-- <h1>{{isLogin}}</h1>
 
     <paper-button raised on-tap="_loginWithGoogle" provider="google">login test</paper-button>
     <paper-button raised on-tap="_logOut">signOut test</paper-button>
 
-    <h1>[[provider]]</h1>
+    <h1>[[provider]]</h1> -->
 
   </template>
   <script>
@@ -87,6 +87,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _login: function() {
         this.error = null;
         this.$.auth.signInWithPopup();
+      },
+
+      emailSignin: function(e) {
+        this.error = null;
+        this.$.auth.signInWithEmailAndPassword(e.detail.email, e.detail.password);
       },
 
       _logOut: function() {

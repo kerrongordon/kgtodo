@@ -24,8 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         height:100vh;
         min-height:100vh;
-        background-color: var(--login-page-bg-color);
         background: var(--login-page-bg-image) no-repeat center center;
+        background-color: var(--login-page-bg-color);
         background-size: cover;
         @apply(--layout-horizontal);
         @apply(--layout-center);
@@ -117,14 +117,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 
         <div class="con-input">
-          <paper-input id="userEmail" label="Name" type="email" value="{{userEmailInput::input}}"></paper-input>
-          <paper-input id="userPassword" label="Password" type="password" value="{{userPasswordInput::input}}"></paper-input>
+          <paper-input id="userEmail" label="Name" type="email" required value="{{userEmailInput::input}}"></paper-input>
+          <paper-input id="userPassword" label="Password" type="password" required value="{{userPasswordInput::input}}"></paper-input>
         </div>
 
         <paper-button class="forgotPassword">Forgot Password</paper-button>
 
         <div class="lonBtn">
-          <paper-button id="loginWithPassword" on-tap="_loginWithPassword" class="lBtn loginBtn">Login</paper-button>
+          <paper-button id="loginWithPassword" on-tap="_onLoginWithPassword" provider="password" class="lBtn loginBtn">Login</paper-button>
           <paper-button id="crateNewUserWithPassword" class="lBtn registerBtn">Register</paper-button>
         </div>
 
@@ -135,8 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>  <!-- login-page -->
 
 
-    <paper-toast id="onNoEmail" text="Please provide a EMAIL"></paper-toast>
-    <paper-toast id="onNoPassword" text="Please provide a PASSWORD"></paper-toast>
+    <paper-toast id="onNoEmailNoPassword" text="Please provide a EMAIL and PASSWORD"></paper-toast>
 
 
   </template>
@@ -166,24 +165,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _onUserLoginInputChange: function(userEmailInput, userPasswordInput) {
-        console.log(userEmailInput);
-        console.log(userPasswordInput);
+        // console.log(userEmailInput);
+        // console.log(userPasswordInput);
       },
 
-      _loginWithPassword: function() {
-        if (this.$.userEmail.value === '' || this.$.userPassword.value === '') {
-
-          if (this.$.userEmail.value === '') {
-            this.$.onNoEmail.open();
-          } else if (this.$.userPassword.value === '') {
-            this.$.onNoPassword.open();
-          }
-
+      _onLoginWithPassword: function() {
+        if (this.$.userEmail.value.length && this.$.userPassword.value.length) {
+          this.fire('email-login', {
+            email: this.$.userEmail.value,
+            password: this.$.userPassword.value,
+            provider: this.$.loginWithPassword.getAttribute('provider')
+          });
+          this.$.userEmail.value = null;
+          this.$.userPassword.value = null;
+        } else {
+          this.$.onNoEmailNoPassword.open();
         }
-
-        
-
-        //console.log(this);
       },
 
       _onLoginWithFacebook: function() {

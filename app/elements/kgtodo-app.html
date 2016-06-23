@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
-    <kgtodo-auth id="kgAuth" user="{{user}}" provider="{{provider}}" isLogin="{{isLogin}}"></kgtodo-auth>
+    <kgtodo-auth id="kgAuth" user="{{user}}" provider="{{provider}}" isLogin="{{isLogin}}" emailSignin="{{emailSignin}}"></kgtodo-auth>
 
     <iron-pages role="main" selected="[[page]]" attr-for-selected="page-title">
 
@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     on-facebook-login="facebookSignin"
                     on-google-login="googleSignin"
                     on-twitter-login="twitterSignin"
-                    hidden$="{{!isLogin}}"></kgtodo-login>
+                    on-email-login="emailSignin"></kgtodo-login>
 
       <kgtodo-home page-title="home"></kgtodo-home>
     </iron-pages>
@@ -64,6 +64,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         provider: {
           type: String,
           notify: true
+        },
+        emailSignin: {
+          type: Array,
+          notify: true
         }
       },
 
@@ -71,30 +75,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_routePageChanged(routeData.page)'
       ],
 
+      emailSignin: function(e) {
+        this.error = null;
+        this.$.kgAuth.provider = e.detail.provider;
+        //this.$.kgAuth.signInWithEmailAndPassword(e.detail.email, e.detail.password);
+        //this.$.kgAuth._login();
+      },
+
       facebookSignin: function(e) {
+        this.error = null;
         this.$.kgAuth.provider = e.detail.facebook;
         this.$.kgAuth._login();
       },
 
       googleSignin: function(e) {
+        this.error = null;
         this.$.kgAuth.provider = e.detail.google;
         this.$.kgAuth._login();
       },
 
       twitterSignin: function(e) {
+        this.error = null;
         this.$.kgAuth.provider = e.detail.twitter;
         this.$.kgAuth._login();
       },
 
       _routePageChanged: function(page) {
         this.page = page || 'login';
+        if (!this.isLogin) {
+          window.location.href = '#/login';
+        }
       },
 
       _pageChanged: function(page) {
         // load page import on demand.
         this.importHref(
           this.resolveUrl('kgtodo-' + page + '/kgtodo-' + page + '.html'), null, null, true);
-          console.log(page);
+          // console.log(page);
       }
 
     });
