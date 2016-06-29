@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
 
-      app-toolbar {
+      /*app-toolbar {
         background: var(--primary-color);
         position: fixed;
         left: 0;
@@ -30,8 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         z-index: 100;
         box-shadow: 0 0 5px 1px rgba(0,0,0, 0.5);
         color: var(--drawer-menu-color) !important;
-      }
-      kgtodo-list {
+      }*/
+      /*kgtodo-list {
         margin-top: 6em;
       }
       .searchBtn {
@@ -62,10 +62,105 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position: fixed;
         right: 25px;
         bottom: 25px;
+      }*/
+
+
+
+
+
+      app-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 300px;
+        color: #fff;
+        background-color: var(--primary-color);
+        --app-header-background-front-layer: {
+          background-image: url(../../images/login-bg.jpg);
+          background-position: left center;
+        };
+        --app-header-background-rear-layer: {
+          background-image: url(../../images/login-bg.jpg);
+          background-position: left center;
+        };
       }
+
+      paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      app-toolbar.tall {
+        height: 148px;
+      }
+
+      sample-content {
+        padding-top: 212px;
+      }
+
+      [title] {
+        font-weight: lighter;
+        margin-left: 108px;
+      }
+
+      [condensed-title] {
+        font-weight: lighter;
+        margin-left: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      [condensed-title] i {
+        font-weight: 100;
+        font-style: normal;
+      }
+
+      @media (max-width: 639px) {
+        [title] {
+          margin-left: 50px;
+          font-size: 30px;
+        }
+        [condensed-title] {
+          font-size: 15px;
+        }
+      }
+
+
+
+      .test {
+        height: 9999px;
+        width: 100%;
+        display: block;
+      }
+
     </style>
 
-    <app-toolbar id="searchTodo">
+    <app-drawer-layout fullbleed>
+      <app-drawer>
+        drawer-content
+      </app-drawer>
+      <app-header-layout>
+        <app-header condenses reveals effects="waterfall resize-title blend-background parallax-background">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <h4 condensed-title>What is material? &mdash; Environment</h4>
+            <paper-icon-button icon="search"></paper-icon-button>
+          </app-toolbar>
+          <app-toolbar class="tall">
+            <h1 title>What is material?</h1>
+          </app-toolbar>
+        </app-header>
+
+        <div class="test">
+          main content
+        </div>
+
+
+      </app-header-layout>
+    </app-drawer-layout>
+
+
+    <!-- <app-toolbar id="searchTodo">
 
       <app-drawer id="sidebar" swipe-open>
 
@@ -114,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-toast id="noTask" text="There is no Task Available"></paper-toast>
 
     <paper-toast opened="[[user]]" id="taskDone"
-                 text="loading completed"></paper-toast>
+                 text="loading completed"></paper-toast> -->
   </template>
   <script>
   (function() {

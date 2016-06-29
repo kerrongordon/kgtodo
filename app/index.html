@@ -45,6 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/animate.css">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -59,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <style is="custom-style" include="shared-styles"></style>
 </head>
 
-<body unresolved>
+<body class="fullbleed" unresolved>
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
@@ -90,7 +91,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
+  <script src="scripts/wow.js"></script>
   <!-- endbuild-->
+  <script>
+    new WOW().init();
+  </script>
 </body>
 
 </html>

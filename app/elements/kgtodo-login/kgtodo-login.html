@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         --login-page-bg-color: #34495e;
         --login-page-bg-image: url(../../images/login-bg.jpg);
+        --login-page-bg-image-small: url(../../images/login-bg-sm.jpg);
         --text-color-light: #fff;
         --primary-color: #1abc9c;
       }
@@ -31,12 +32,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center);
         @apply(--layout-center-justified);
       }
+      .login-page[mobile-layout] {
+        height:100%;
+        background: var(--login-page-bg-image-small) no-repeat center center;
+        background-size: cover;
+        display: block;
+      }
       .con {
         text-align: center;
         color: var(--text-color-light);
         max-width: 400px;
         width: 100%;
         padding: 20px;
+      }
+      .con[mobile-layout] {
+        width: 88%;
       }
       .logo-img {
         width: 128px;
@@ -95,15 +105,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .socialLogin {
         margin: 20px 0 10px;
       }
+      .socialBtn[mobile-layout] {
+        margin: 0;
+      }
       .title {
         font-weight: 300;
         margin: 30px 0;
       }
     </style>
 
-    <div class="login-page">
+    <iron-media-query query="(max-width: 460px)" query-matches="{{mobile}}"></iron-media-query>
+    <iron-media-query query="(min-width: 730px)" query-matches="{{tablet}}"></iron-media-query>
 
-      <div class="con">
+    <div class="login-page" mobile-layout$="{{mobile}}">
+
+      <div class="con" mobile-layout$="{{mobile}}">
 
         <iron-image class="logo-img"
                     src="../../images/touch/icon-128x128.png"></iron-image>
@@ -114,25 +130,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <p hidden="[[!register]]">Register</p>
 
-        <div id="socialBtns" class="socialLogin" hidden="[[register]]">
-          <paper-button id="facebookLogin" class="socialBtn" on-tap="_onLoginWithFacebook" provider="facebook">
-            <svg class="social" viewBox="0 0 24 24">
-                <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
-            </svg>
+        <div id="socialBtns"
+             class="socialLogin"
+             hidden="[[register]]">
+
+          <paper-button id="facebookLogin"
+                        class="socialBtn"
+                        mobile-layout$="{{mobile}}"
+                        on-tap="_onLoginWithFacebook"
+                        provider="facebook">
+
+            <iron-icon icon="kgtodo-icons:facebook" class="social"></iron-icon>
+
           </paper-button>
 
-          <paper-button id="googleLogin" class="socialBtn" on-tap="_onLoginWithGoogle" provider="google">
-            <svg class="social" viewBox="0 0 24 24">
-                <path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
-            </svg>
+          <paper-button id="googleLogin"
+                        class="socialBtn"
+                        mobile-layout$="{{mobile}}"
+                        on-tap="_onLoginWithGoogle"
+                        provider="google">
+
+            <iron-icon icon="kgtodo-icons:google" class="social"></iron-icon>
+
           </paper-button>
 
-          <paper-button id="twitterLogin" class="socialBtn" on-tap="_onLoginWithTwitter" provider="twitter">
-            <svg class="social" viewBox="0 0 24 24">
-                <path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" />
-            </svg>
+          <paper-button id="twitterLogin"
+                        class="socialBtn"
+                        mobile-layout$="{{mobile}}"
+                        on-tap="_onLoginWithTwitter"
+                        provider="twitter">
+
+            <iron-icon icon="kgtodo-icons:twitter" class="social"></iron-icon>
+
           </paper-button>
-        </div>
+
+        </div> <!-- #socialBtns -->
 
         <div class="con-input">
 
@@ -152,7 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                        value="{{userPasswordComformInput::input}}"
                        hidden="[[!register]]"></paper-input>
 
-        </div>
+        </div> <!-- con-input -->
 
         <paper-button class="link forgotPassword"
                       hidden="[[register]]">Forgot Password</paper-button>
@@ -180,7 +212,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         hidden="[[!register]]"
                         on-tap="_onGotoRegisterPageToggle">Cancel</paper-button>
 
-        </div>
+        </div> <!-- lonBtn -->
 
         <paper-button class="link tam">Terms and Conditions</paper-button>
 
@@ -241,7 +273,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _onLoginWithPassword: function() {
-        if (this.$.userEmail.value.length && this.$.userPassword.value.length) {
+        if (this.$.userEmail.value && this.$.userPassword.value) {
           this.fire('email-login', {
             email: this.$.userEmail.value,
             password: this.$.userPassword.value,

@@ -65,10 +65,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           notify: true
         },
-        isLogin: {
-          type: Boolean,
-          notify: true
-        },
         provider: {
           type: String,
           notify: true
@@ -109,9 +105,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _routePageChanged: function(page) {
-        this.page = page || 'login';
-        if (!this.isLogin) {
+        if (!this.$.kgAuth.isLogin) {
           window.location.href = '#/login';
+          this.page = page || 'login';
+        } else {
+          window.location.href = '#/home';
+          this.page = page || 'home';
         }
       },
 

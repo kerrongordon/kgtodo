@@ -23,8 +23,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       api-key="AIzaSyCOwoe4JVQ81LNukA4E-gzfQW4bXniivns">
     </firebase-app>
 
-    <firebase-auth id="auth" user="{{user}}" provider="{{provider}}" signed-in="{{isLogin}}" on-error="handleError">
+    <firebase-auth id="auth" user="{{user}}" provider="{{provider}}" on-error="handleError">
     </firebase-auth>
+
+    <!-- signed-in="{{isLogin}}" -->
 
     <!-- <h1>{{isLogin}}</h1>
 
@@ -48,7 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         isLogin: {
           type: Boolean,
-          notify: true
+          notify: true,
+          value: true
         },
         provider: {
           type: String,
@@ -74,11 +77,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-      _isLogin: function(isLogin) {
-        if (this.isLogin === true) {
-          window.location.href = '#/home';
-        }
-      },
+      // _isLogin: function(isLogin) {
+      //   if (this.isLogin === true) {
+      //     window.location.href = '#/home';
+      //   }
+      // },
 
       updateUser: function() {
         console.log(this.user);
