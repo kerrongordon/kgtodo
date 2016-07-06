@@ -137,7 +137,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button id="facebookLogin"
                         class="socialBtn"
                         mobile-layout$="{{mobile}}"
-                        on-tap="_onLoginWithFacebook"
                         provider="facebook">
 
             <iron-icon icon="kgtodo-icons:facebook" class="social"></iron-icon>
@@ -147,7 +146,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button id="googleLogin"
                         class="socialBtn"
                         mobile-layout$="{{mobile}}"
-                        on-tap="_onLoginWithGoogle"
                         provider="google">
 
             <iron-icon icon="kgtodo-icons:google" class="social"></iron-icon>
@@ -157,7 +155,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button id="twitterLogin"
                         class="socialBtn"
                         mobile-layout$="{{mobile}}"
-                        on-tap="_onLoginWithTwitter"
                         provider="twitter">
 
             <iron-icon icon="kgtodo-icons:twitter" class="social"></iron-icon>
@@ -306,16 +303,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      _onLoginWithFacebook: function() {
-        this.fire('facebook-login', {facebook: this.$.facebookLogin.getAttribute('provider')});
+      _onLoginBtn: function(e) {
+        this.fire('user-login', {
+          provider: e.path[1].getAttribute('provider'),
+        });
       },
 
-      _onLoginWithGoogle: function() {
-        this.fire('google-login', {google: this.$.googleLogin.getAttribute('provider')});
-      },
-
-      _onLoginWithTwitter: function() {
-        this.fire('twitter-login', {twitter: this.$.twitterLogin.getAttribute('provider')});
+      listeners: {
+        'facebookLogin.tap': '_onLoginBtn',
+        'googleLogin.tap': '_onLoginBtn',
+        'twitterLogin.tap': '_onLoginBtn'
       }
 
     });
