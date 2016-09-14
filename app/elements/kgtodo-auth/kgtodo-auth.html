@@ -23,17 +23,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       api-key="AIzaSyCOwoe4JVQ81LNukA4E-gzfQW4bXniivns">
     </firebase-app>
 
-    <firebase-auth id="auth" user="{{user}}" provider="{{provider}}" signed-in="{{isLogin}}" on-error="handleError">
+    <firebase-auth id="auth"
+      user="{{user}}"
+      provider="{{provider}}"
+      signed-in="{{isLogin}}"
+      on-error="handleError">
     </firebase-auth>
 
     <!-- signed-in="{{isLogin}}" -->
 
-     <!--<h1>{{isLogin}}</h1>
+    <h1>[[isLogin]]</h1>
 
     <paper-button raised on-tap="_loginWithGoogle" provider="google">login test</paper-button>
     <paper-button raised on-tap="_logOut">signOut test</paper-button>
 
-    <h1>[[provider]]</h1> -->
+    <h1>[[provider]]</h1>
 
   </template>
   <script>
@@ -48,13 +52,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           notify: true
         },
-        isLogin: {
-          type: Boolean,
-          notify: true,
-          value: true
-        },
         provider: {
           type: String,
+          notify: true
+        },
+        isLogin: {
+          type: Boolean,
           notify: true
         },
         data: {
@@ -69,7 +72,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       observers: [
         'updateUser(user)',
-        '_isLogin(isLogin)',
         '_onProviderChange(provider)'
       ],
 

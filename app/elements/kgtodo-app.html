@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="kgtodo-auth/kgtodo-auth.html">
 
 <dom-module id="kgtodo-app">
   <template>
@@ -17,6 +18,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
+
+    <h1> test [[isLogin]]</h1>
 
     <app-location route="{{route}}"
                   use-hash-as-path></app-location>
@@ -30,7 +33,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <kgtodo-auth id="kgAuth"
                  user="{{user}}"
                  provider="{{provider}}"
-                 isLogin="{{isLogin}}"
                  emailSignin="{{emailSignin}}"></kgtodo-auth>
 
     <iron-pages role="main"
@@ -43,6 +45,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <kgtodo-home page-title="home"></kgtodo-home>
 
     </iron-pages>
+
+    <firebase-auth signed-in="{{isLogin}}"></firebase-auth>
 
   </template>
   <script>
@@ -88,10 +92,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _routePageChanged: function(page) {
-        if (!this.$.kgAuth.isLogin) {
+        console.log(this.$.kgAuth.isLogin);
+        console.log(this.$.isLogin);
+
+        if (this.$.kgAuth.isLogin === false) {
           window.location.href = '#/login';
           this.page = page || 'login';
-        } else {
+        } else if (this.$.kgAuth.isLogin === true) {
           window.location.href = '#/home';
           this.page = page || 'home';
         }
